@@ -7,6 +7,7 @@ const spinner = document.getElementById('spinner');
 // get input value in search field
 const getInputValue = () => {
     spinner.style.display = 'block';
+    foundFiled.style.display = 'none';
     displayContainer.innerHTML = '';
     const inputValue = inputFiled.value;
     loadData(inputValue);
