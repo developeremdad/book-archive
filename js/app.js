@@ -7,6 +7,7 @@ const spinner = document.getElementById('spinner');
 // get input value in search field
 const getInputValue = () => {
     spinner.style.display = 'block';
+    displayContainer.innerHTML = '';
     const inputValue = inputFiled.value;
     loadData(inputValue);
     inputFiled.value = '';
@@ -17,9 +18,12 @@ const loadData = async (bookName) => {
     const url = `https://openlibrary.org/search.json?q=${bookName}`;
     const res = await fetch(url);
     const data = await res.json();
+
     spinner.style.display = 'none';
-    const foundData = data.numFound;
     foundFiled.style.display = 'block';
+    const foundData = data.numFound;
+
+    // error handling part
     if (foundData === 0) {
         foundFiled.classList.remove('text-primary');
         foundFiled.classList.add('text-danger');
@@ -53,12 +57,12 @@ const displayData = (allBooks) => {
         div.classList.add('col');
         div.innerHTML = `
             <div>
-                <div class="card">
+                <div class="card hover-div">
                     <img  src="https://covers.openlibrary.org/b/id/${coverImg}-M.jpg" class="card-img-top img-fluid" alt="'Image not found'+'${bookName}'">
                     <div class="card-body">
                         <h5 class="card-title "><b>Name:</b> ${typeof (bookName) === 'undefined' ? 'Not Found' : bookName}</h5>
-                        <p class="card-text"><b>Publisher:</b> ${typeof (publisher) === 'undefined' ? 'Not Found' : publisher}</p>
-                        <p class="card-text "><b>Writer:</b> ${authorName}</p>
+                        <p class="card-text"><b>Publisher:</b> ${publisher ? publisher[0] : 'Not Found'}</p>
+                        <p class="card-text "><b>Writer:</b> ${authorName ? authorName[0] : 'Not Found'}</p>
                         <p><b>First Publish:</b> ${typeof (publishDate) === 'undefined' ? 'Not Found' : publishDate}</p>
                         <div>
                             <div class="d-grid gap-2">
@@ -74,4 +78,4 @@ const displayData = (allBooks) => {
     });
 }
 
-/* --------------------------------------------End javascript custom code ---------------------------------------------*/
+/* ----------------------------------End javascript custom code. Happy Coding -------------------------------------*/
