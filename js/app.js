@@ -2,9 +2,11 @@
 const foundFiled = document.getElementById('found');
 const inputFiled = document.getElementById('input-filed');
 const displayContainer = document.getElementById('display-container');
+const spinner = document.getElementById('spinner');
 
 // get input value in search field
 const getInputValue = () => {
+    spinner.style.display = 'block';
     const inputValue = inputFiled.value;
     loadData(inputValue);
     inputFiled.value = '';
@@ -15,6 +17,7 @@ const loadData = async (bookName) => {
     const url = `https://openlibrary.org/search.json?q=${bookName}`;
     const res = await fetch(url);
     const data = await res.json();
+    spinner.style.display = 'none';
     const foundData = data.numFound;
     foundFiled.style.display = 'block';
     if (foundData === 0) {
